@@ -29,13 +29,13 @@ export default class Landing extends Component {
   }
 
   render() {
+    // setInterval(this.render, 250);
     const { originalDateOfDebt, currentDate } = this.state;
     const newDebt = +((currentDate - originalDateOfDebt) * 0.00000003805175)
       .toString()
       .split('')
       .slice(0, 4)
       .join('');
-    // console.log(+newDebt);
     return (
       <Wrapper className="">
         <img src="../public/favicon.ico" alt={'Show Me The Money!'} />

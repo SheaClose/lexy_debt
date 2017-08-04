@@ -6,7 +6,6 @@
     "node": true
   },
   "extends": [
-    "eslint:recommended",
     "airbnb",
     "prettier",
     "prettier/react"
@@ -23,7 +22,7 @@
     "react"
   ],
   "rules": {
-    "console": 0,
+    "no-console": 0,
     "linebreak-style": [
       "error",
       "unix"
