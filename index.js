@@ -11,7 +11,7 @@ const ctrl = require('./server/Ctrl');
 // app.use(session(serverConfig.session) );
 app.use(cors());
 app.use(bodyParser.json());
-// app.use('/', express.static(`${__dirname}/public`));
+app.use('/', express.static(`${__dirname}`));
 massive(config.postgres)
   .then(dbInstance => {
     app.set('db', dbInstance);
@@ -23,6 +23,7 @@ massive(config.postgres)
 // //////////////////////////////////////////////////////////////
 
 app.get('/api/debt', ctrl.getDebt);
+app.put('/api/debt', ctrl.addFunds);
 
 app.listen(port, () => {
   console.log('Server listening on port', port);
