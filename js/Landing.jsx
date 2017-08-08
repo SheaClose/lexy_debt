@@ -23,7 +23,7 @@ export default class Landing extends Component {
       money: 0,
     };
     axios
-      .get('http://localhost:3000/api/debt')
+      .get('/api/debt')
       .then(response => {
         this.setState({ debt: response.data.pop().debt });
       })
@@ -36,7 +36,7 @@ export default class Landing extends Component {
 
   sendFunds(value) {
     axios
-      .put('http://localhost:3000/api/debt', { value })
+      .put('/api/debt', { value })
       .then(response => {
         this.setState({ debt: response.data.pop().debt });
       })
