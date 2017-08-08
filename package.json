@@ -4,7 +4,8 @@
     "dev": "webpack-dev-server",
     "lint": "eslint **/*.{js,jsx} --quiet",
     "watch": "webpack --watch",
-    "start": "node index.js"
+    "start": "node index.js",
+    "web": "node index.js"
   },
   "dependencies": {
     "axios": "0.16.1",
