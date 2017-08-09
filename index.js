@@ -11,7 +11,7 @@ const ctrl = require('./server/Ctrl');
 // app.use(session(serverConfig.session) );
 app.use(cors());
 app.use(bodyParser.json());
-app.use('/', express.static(`${__dirname}`));
+app.use('/', express.static(__dirname));
 massive(config.postgres)
   .then(dbInstance => {
     app.set('db', dbInstance);

@@ -4,8 +4,8 @@ const webpack = require('webpack');
 module.exports = {
   context: __dirname,
   entry: [
-    // 'react-hot-loader/patch',
-    // 'webpack-dev-server/client?http://localhost:8080',
+    'react-hot-loader/patch',
+    'webpack-dev-server/client?http://localhost:8080',
     // 'webpack/hot/only-dev-server',
     './js/LexyDebt.jsx',
   ],

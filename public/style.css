@@ -3,3 +3,8 @@
   padding: 0;
   box-sizing: border-box;
 }
+.my_text{
+  font-family: cursive;
+  font-size: 2rem;
+  color: white;
+}

@@ -2,17 +2,28 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+// import { Link } from 'react-router-dom';
 
 import AddFunds from './addFunds';
 
 const Wrapper = styled.div`
-  width: 80vw;
+  width: 100vw;
   height: 100vh;
-  background-color: darkgrey;
-  margin: auto;
+  background-color: black;
   text-align: center;
-  font-family: sans-serif;
 `;
+
+const GradientCircle = styled.div`
+  height: 100vh;
+  border-radius: 85% 0;
+  background-image: linear-gradient(to bottom left, #A71D31, #D5573B, #682d7a, #3C1B43);
+  background-size: 2000px;
+  position: relative;
+  padding-top: 25%;
+`;
+const BodyContainer = styled.div`
+`;
+
 export default class Landing extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +34,7 @@ export default class Landing extends Component {
       money: 0,
     };
     axios
-      .get('/api/debt')
+      .get('http://localhost:3000/api/debt')
       .then(response => {
         this.setState({ debt: response.data.pop().debt });
       })
@@ -36,7 +47,7 @@ export default class Landing extends Component {
 
   sendFunds(value) {
     axios
-      .put('/api/debt', { value })
+      .put('http://localhost:3000/api/debt', { value })
       .then(response => {
         this.setState({ debt: response.data.pop().debt });
       })
@@ -46,6 +57,17 @@ export default class Landing extends Component {
   }
 
   render() {
+    function styleMyMoney(money) {
+      const cents = money.toString().split('.')[1];
+      switch (true) {
+        case cents.length === 1:
+          return `${money}0`;
+        case !cents.length:
+          return `${money}00`;
+        default:
+          return money;
+      }
+    }
     const { originalDateOfDebt, currentDate } = this.state;
     const newDebt = +((currentDate - originalDateOfDebt) * 0.00000003805175)
       .toString()
@@ -56,12 +78,17 @@ export default class Landing extends Component {
     // props.path ? <AddFunds sendFunds={this.sendFunds} /> : null
     return (
       <Wrapper className="">
-        <img src="../public/favicon.ico" alt={'Show Me The Money!'} />
-        <div className="">
-          How much money does Lexy Owe? <br />
-          ${this.state.debt + newDebt}
-        </div>
-        {addFunds}
+        <GradientCircle>
+          <BodyContainer>
+            <div className="my_text">
+              How much money does Lexy Owe? <br />
+              ${styleMyMoney(this.state.debt + newDebt)}
+            </div>
+            {addFunds}
+          </BodyContainer>
+        </GradientCircle>
+
+        {/* <Link to="/admin">Add Funds</Link> */}
       </Wrapper>
     );
   }

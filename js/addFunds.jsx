@@ -10,12 +10,19 @@ const AddFunds = props => {
         onChange={e => {
           inputValue = e.target.value;
         }}
+        onKeyDown={e => {
+          if (e.keyCode === 13) {
+            sendFunds(inputValue);
+            e.target.value = '';
+          }
+        }}
+        id="myInput"
         type="number"
-        placeholder="0"
       /><br />
       <button
         onClick={() => {
           sendFunds(inputValue);
+          document.getElementById('myInput').value = '';
         }}
         type="button"
       >
