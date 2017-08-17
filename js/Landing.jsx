@@ -35,9 +35,7 @@ export default class Landing extends Component {
     };
     axios
       .get('http://localhost:3000/api/debt')
-      .then(response => {
-        this.setState({ debt: response.data.pop().debt });
-      })
+      .then(response => this.setState({ debt: response.data }))
       .catch(err => {
         console.warn('Something went wrong with getting the debt: ', err);
       });
@@ -47,9 +45,12 @@ export default class Landing extends Component {
 
   sendFunds(value) {
     axios
-      .put('http://localhost:3000/api/debt', { value })
+      .put('http://localhost:3000/api/debt', {
+        value,
+        date: new Date().toString(),
+      })
       .then(response => {
-        this.setState({ debt: response.data.pop().debt });
+        this.setState({ debt: response.data });
       })
       .catch(err => {
         console.warn('Something went wrong with updating the debt: ', err);
@@ -74,7 +75,9 @@ export default class Landing extends Component {
       .split('')
       .slice(0, 4)
       .join('');
-    const addFunds = this.props.path ? <AddFunds sendFunds={this.sendFunds} /> : null;
+    const addFunds = this.props.path
+      ? <AddFunds sendFunds={this.sendFunds} />
+      : null;
     // props.path ? <AddFunds sendFunds={this.sendFunds} /> : null
     return (
       <Wrapper className="">

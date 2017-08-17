@@ -18,6 +18,7 @@ const AddFunds = props => {
         }}
         id="myInput"
         type="number"
+        placeholder="Funds to Add"
       /><br />
       <button
         onClick={() => {
