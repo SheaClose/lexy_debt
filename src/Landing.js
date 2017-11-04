@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import AddFunds from './addFunds';
@@ -41,25 +40,22 @@ export default class Landing extends Component {
     axios
       .get('/api/debt')
       .then(response => this.setState({ debt: response.data }))
-      .catch(err => {
-        console.warn('Something went wrong with getting the debt: ', err);
-      });
+      .catch(console.log);
 
     this.sendFunds = this.sendFunds.bind(this);
   }
 
-  sendFunds(value) {
+  sendFunds({ inputValue, description }) {
     axios
       .put('/api/debt', {
-        value,
+        inputValue,
+        description,
         date: new Date().toString()
       })
       .then(response => {
         this.setState({ debt: response.data });
       })
-      .catch(err => {
-        console.warn('Something went wrong with updating the debt: ', err);
-      });
+      .catch(console.log);
   }
 
   render() {

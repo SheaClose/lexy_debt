@@ -19,7 +19,7 @@ export default class AddFunds extends Component {
   }
   sendFunds({ inputValue, description }) {
     if (inputValue && description) {
-      this.props.sendFunds(inputValue, description);
+      this.props.sendFunds({ inputValue, description });
     }
   }
   render() {
