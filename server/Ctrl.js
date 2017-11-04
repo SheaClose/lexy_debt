@@ -15,7 +15,7 @@ module.exports = {
   },
   addFunds(req, res) {
     const db = req.app.get('db');
-    const SQL_STRING = `insert into lexy_payments (payment, date, description) values ($1, $2, $3);
+    const SQL_STRING = `insert into lexy_payments (payment, description, date) values ($1, $2, $3);
       select * from lexy_debt;`;
 
     const { inputValue, description, date } = req.body;
