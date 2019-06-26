@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-
+import moment from 'moment';
 import AddFunds from './addFunds';
 
 const Wrapper = styled.div`
@@ -33,6 +33,7 @@ export default class Landing extends Component {
     super(props);
     this.state = {
       debt: 0,
+      /** date that insurance changed */
       originalDateOfDebt: new Date('Fri Aug 04 2017 13:20:43 GMT-0500 (CDT)'),
       currentDate: new Date(),
       money: 0
@@ -45,25 +46,21 @@ export default class Landing extends Component {
     this.sendFunds = this.sendFunds.bind(this);
   }
 
-  sendFunds({ inputValue, description }) {
-    axios
+  sendFunds(inputValue) {
+    return axios
       .put('/api/debt', {
         inputValue,
-        description,
         date: new Date().toString()
       })
       .then(response => {
         this.setState({ debt: response.data });
-      })
-      .catch(console.log);
+        return response;
+      });
   }
 
   render() {
-    function styleMyMoney(money) {
-      return money.toString().split('.')[0];
-    }
     const { originalDateOfDebt, currentDate } = this.state;
-    const newDebt = +((currentDate - originalDateOfDebt) * 0.00000003805175)
+    const newDebt = +((currentDate - originalDateOfDebt) * 0.00000002150175)
       .toString()
       .split('')
       .slice(0, 5)
@@ -76,8 +73,8 @@ export default class Landing extends Component {
         <GradientCircle>
           <BodyContainer>
             <div className="my_text">
-              How much money does Lexy Owe? <br />
-              ${styleMyMoney(this.state.debt + newDebt)}
+              How much money does Lexy Owe? <br />$
+              {styleMyMoney(this.state.debt + newDebt)}
             </div>
             {addFunds}
           </BodyContainer>
@@ -94,3 +91,7 @@ Landing.defaultProps = {
 Landing.propTypes = {
   path: PropTypes.string.isRequired
 };
+
+function styleMyMoney(money) {
+  return money.toString().split('.')[0];
+}

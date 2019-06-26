@@ -1,17 +1,16 @@
 {
-  "now": {
-    "alias": "lexy-debt"
-  },
   "name": "lexy_debt_v2",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "axios": "^0.17.0",
     "body-parser": "^1.18.2",
+    "concurrently": "^4.0.1",
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "massive": "^4.4.0",
+    "moment": "^2.24.0",
     "path": "^0.12.7",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
@@ -22,9 +21,8 @@
     "react-scripts": "1.0.17"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "now-start": "node index.js",
-    "deploy": "now --public --dotenv=.env.prod -d",
+    "start": "concurrently \"react-scripts start\" \"nodemon server/index.js --ignore src\"",
+    "deploy": "forever stop server/index.js && npm run build && forever start server/index.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
