@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import AddFunds from './addFunds';
 
 const Wrapper = styled.div`
