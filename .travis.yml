@@ -1,0 +1,18 @@
+dist: trusty
+sudo: required
+language: node_js
+notifications:
+  email: false
+node_js: '8'
+
+install:
+  - npm i
+  - npm i -g travis-ci-cloudfront-invalidation
+  - pip install awscli --upgrade --user
+
+script:
+  - npm run build
+  - aws s3 rm s3://lexy.sheaclose.com --recursive
+  - aws s3 cp ./build/ s3://lexy.sheaclose.com/ --recursive
+  - aws cloudfront create-invalidation --distribution-id E3JTQA8C7AV3WE --paths /*
+  - travis-ci-cloudfront-invalidation -a $AWS_ACCESS_KEY_ID -s $AWS_SECRET_ACCESS_KEY -c $CLOUDFRONT_ID -i '/*' -b $TRAVIS_BRANCH -p $TRAVIS_PULL_REQUEST -o 'master'

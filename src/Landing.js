@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import AddFunds from './addFunds';
-
+const BASE_URL = process.env.NODE_ENV === 'production' ? 'https://api.sheaclose.com' : 'http://localhost:3000'
 const Wrapper = styled.div`
   width: 100vw;
   height: 100vh;
@@ -38,7 +38,7 @@ export default class Landing extends Component {
       money: 0
     };
     axios
-      .get('/api/debt')
+      .get(BASE_URL + '/lexy/debt')
       .then(response => this.setState({ debt: response.data }))
       .catch(console.log);
 
@@ -47,7 +47,7 @@ export default class Landing extends Component {
 
   sendFunds(inputValue) {
     return axios
-      .put('/api/debt', {
+      .put(BASE_URL + '/lexy/debt', {
         inputValue,
         date: new Date().toString()
       })
